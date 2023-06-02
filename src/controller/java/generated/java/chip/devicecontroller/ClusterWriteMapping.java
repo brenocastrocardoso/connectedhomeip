@@ -770,6 +770,52 @@ public class ClusterWriteMapping {
     );
     writeModeSelectInteractionInfo.put("writeOnModeAttribute", writeModeSelectOnModeAttributeInteractionInfo);
     writeAttributeMap.put("modeSelect", writeModeSelectInteractionInfo);
+    Map<String, InteractionInfo> writeWasherControlsInteractionInfo = new LinkedHashMap<>();
+    Map<String, CommandParameterInfo> writeWasherControlsSpinSpeedCurrentCommandParams = new LinkedHashMap<String, CommandParameterInfo>();
+    CommandParameterInfo washerControlsspinSpeedCurrentCommandParameterInfo =
+        new CommandParameterInfo(
+            "value", 
+            Integer.class, 
+            Integer.class 
+        );
+    writeWasherControlsSpinSpeedCurrentCommandParams.put(
+        "value",
+        washerControlsspinSpeedCurrentCommandParameterInfo
+    );
+    InteractionInfo writeWasherControlsSpinSpeedCurrentAttributeInteractionInfo = new InteractionInfo(
+      (cluster, callback, commandArguments) -> {
+        ((ChipClusters.WasherControlsCluster) cluster).writeSpinSpeedCurrentAttribute(
+          (DefaultClusterCallback) callback,
+          (Integer) commandArguments.get("value")
+        );
+      },
+      () -> new ClusterInfoMapping.DelegatedDefaultClusterCallback(),
+      writeWasherControlsSpinSpeedCurrentCommandParams
+    );
+    writeWasherControlsInteractionInfo.put("writeSpinSpeedCurrentAttribute", writeWasherControlsSpinSpeedCurrentAttributeInteractionInfo);
+    Map<String, CommandParameterInfo> writeWasherControlsNumberOfRinsesCommandParams = new LinkedHashMap<String, CommandParameterInfo>();
+    CommandParameterInfo washerControlsnumberOfRinsesCommandParameterInfo =
+        new CommandParameterInfo(
+            "value", 
+            Integer.class, 
+            Integer.class 
+        );
+    writeWasherControlsNumberOfRinsesCommandParams.put(
+        "value",
+        washerControlsnumberOfRinsesCommandParameterInfo
+    );
+    InteractionInfo writeWasherControlsNumberOfRinsesAttributeInteractionInfo = new InteractionInfo(
+      (cluster, callback, commandArguments) -> {
+        ((ChipClusters.WasherControlsCluster) cluster).writeNumberOfRinsesAttribute(
+          (DefaultClusterCallback) callback,
+          (Integer) commandArguments.get("value")
+        );
+      },
+      () -> new ClusterInfoMapping.DelegatedDefaultClusterCallback(),
+      writeWasherControlsNumberOfRinsesCommandParams
+    );
+    writeWasherControlsInteractionInfo.put("writeNumberOfRinsesAttribute", writeWasherControlsNumberOfRinsesAttributeInteractionInfo);
+    writeAttributeMap.put("washerControls", writeWasherControlsInteractionInfo);
     Map<String, InteractionInfo> writeTemperatureControlInteractionInfo = new LinkedHashMap<>();
     writeAttributeMap.put("temperatureControl", writeTemperatureControlInteractionInfo);
     Map<String, InteractionInfo> writeRefrigeratorAlarmInteractionInfo = new LinkedHashMap<>();
