@@ -4358,6 +4358,76 @@ class ChipClusters:
             },
         },
     }
+    _WASHER_CONTROLS_CLUSTER_INFO = {
+        "clusterName": "WasherControls",
+        "clusterId": 0x00000053,
+        "commands": {
+        },
+        "attributes": {
+            0x00000000: {
+                "attributeName": "SpinSpeeds",
+                "attributeId": 0x00000000,
+                "type": "bytes",
+                "reportable": True,
+            },
+            0x00000001: {
+                "attributeName": "SpinSpeedCurrent",
+                "attributeId": 0x00000001,
+                "type": "int",
+                "reportable": True,
+                "writable": True,
+            },
+            0x00000002: {
+                "attributeName": "NumberOfRinses",
+                "attributeId": 0x00000002,
+                "type": "int",
+                "reportable": True,
+                "writable": True,
+            },
+            0x00000003: {
+                "attributeName": "MaxRinses",
+                "attributeId": 0x00000003,
+                "type": "int",
+                "reportable": True,
+            },
+            0x0000FFF8: {
+                "attributeName": "GeneratedCommandList",
+                "attributeId": 0x0000FFF8,
+                "type": "int",
+                "reportable": True,
+            },
+            0x0000FFF9: {
+                "attributeName": "AcceptedCommandList",
+                "attributeId": 0x0000FFF9,
+                "type": "int",
+                "reportable": True,
+            },
+            0x0000FFFA: {
+                "attributeName": "EventList",
+                "attributeId": 0x0000FFFA,
+                "type": "int",
+                "reportable": True,
+            },
+            0x0000FFFB: {
+                "attributeName": "AttributeList",
+                "attributeId": 0x0000FFFB,
+                "type": "int",
+                "reportable": True,
+            },
+            0x0000FFFC: {
+                "attributeName": "FeatureMap",
+                "attributeId": 0x0000FFFC,
+                "type": "int",
+                "reportable": True,
+            },
+            0x0000FFFD: {
+                "attributeName": "ClusterRevision",
+                "attributeId": 0x0000FFFD,
+                "type": "int",
+                "reportable": True,
+            },
+        },
+    }
     _TEMPERATURE_CONTROL_CLUSTER_INFO = {
         "clusterName": "TemperatureControl",
         "clusterId": 0x00000056,
@@ -4397,7 +4467,7 @@ class ChipClusters:
                 "reportable": True,
             },
             0x00000004: {
-                "attributeName": "CurrentTemperatureLevelIndex",
+                "attributeName": "SelectedTemperatureLevel",
                 "attributeId": 0x00000004,
                 "type": "int",
                 "reportable": True,
@@ -4405,7 +4475,7 @@ class ChipClusters:
             0x00000005: {
                 "attributeName": "SupportedTemperatureLevels",
                 "attributeId": 0x00000005,
-                "type": "",
+                "type": "str",
                 "reportable": True,
             },
             0x0000FFF8: {
@@ -15069,6 +15139,7 @@ class ChipClusters:
         0x00000045: _BOOLEAN_STATE_CLUSTER_INFO,
         0x00000046: _ICD_MANAGEMENT_CLUSTER_INFO,
         0x00000050: _MODE_SELECT_CLUSTER_INFO,
+        0x00000053: _WASHER_CONTROLS_CLUSTER_INFO,
         0x00000056: _TEMPERATURE_CONTROL_CLUSTER_INFO,
         0x00000057: _REFRIGERATOR_ALARM_CLUSTER_INFO,
         0x0000005B: _AIR_QUALITY_CLUSTER_INFO,
@@ -15197,6 +15268,7 @@ class ChipClusters:
         "BooleanState": _BOOLEAN_STATE_CLUSTER_INFO,
         "IcdManagement": _ICD_MANAGEMENT_CLUSTER_INFO,
         "ModeSelect": _MODE_SELECT_CLUSTER_INFO,
+        "WasherControls": _WASHER_CONTROLS_CLUSTER_INFO,
         "TemperatureControl": _TEMPERATURE_CONTROL_CLUSTER_INFO,
         "RefrigeratorAlarm": _REFRIGERATOR_ALARM_CLUSTER_INFO,
         "AirQuality": _AIR_QUALITY_CLUSTER_INFO,

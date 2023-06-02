@@ -7119,7 +7119,7 @@ struct TypeInfo
 } // namespace GeneralCommissioning
 namespace NetworkCommissioning {
 namespace Structs {
-namespace NetworkInfo {
+namespace NetworkInfoStruct {
 enum class Fields : uint8_t
 {
     kNetworkID = 0,
@@ -7141,8 +7141,8 @@ public:
 
 using DecodableType = Type;
 
-} // namespace NetworkInfo
-namespace ThreadInterfaceScanResult {
+} // namespace NetworkInfoStruct
+namespace ThreadInterfaceScanResultStruct {
 enum class Fields : uint8_t
 {
     kPanId           = 0,
@@ -7176,8 +7176,8 @@ public:
 
 using DecodableType = Type;
 
-} // namespace ThreadInterfaceScanResult
-namespace WiFiInterfaceScanResult {
+} // namespace ThreadInterfaceScanResultStruct
+namespace WiFiInterfaceScanResultStruct {
 enum class Fields : uint8_t
 {
     kSecurity = 0,
@@ -7191,12 +7191,12 @@ enum class Fields : uint8_t
 struct Type
 {
 public:
-    chip::BitMask<WiFiSecurity> security = static_cast<chip::BitMask<WiFiSecurity>>(0);
+    chip::BitMask<WiFiSecurityBitmap> security = static_cast<chip::BitMask<WiFiSecurityBitmap>>(0);
     chip::ByteSpan ssid;
     chip::ByteSpan bssid;
-    uint16_t channel  = static_cast<uint16_t>(0);
-    WiFiBand wiFiBand = static_cast<WiFiBand>(0);
-    int8_t rssi       = static_cast<int8_t>(0);
+    uint16_t channel      = static_cast<uint16_t>(0);
+    WiFiBandEnum wiFiBand = static_cast<WiFiBandEnum>(0);
+    int8_t rssi           = static_cast<int8_t>(0);
 
     CHIP_ERROR Decode(TLV::TLVReader & reader);
 
@@ -7207,7 +7207,7 @@ public:
 
 using DecodableType = Type;
 
-} // namespace WiFiInterfaceScanResult
+} // namespace WiFiInterfaceScanResultStruct
 } // namespace Structs
 
 namespace Commands {
@@ -7312,10 +7312,10 @@ public:
     static constexpr CommandId GetCommandId() { return Commands::ScanNetworksResponse::Id; }
     static constexpr ClusterId GetClusterId() { return Clusters::NetworkCommissioning::Id; }
 
-    NetworkCommissioningStatus networkingStatus = static_cast<NetworkCommissioningStatus>(0);
+    NetworkCommissioningStatusEnum networkingStatus = static_cast<NetworkCommissioningStatusEnum>(0);
     Optional<chip::CharSpan> debugText;
-    Optional<DataModel::List<const Structs::WiFiInterfaceScanResult::Type>> wiFiScanResults;
-    Optional<DataModel::List<const Structs::ThreadInterfaceScanResult::Type>> threadScanResults;
+    Optional<DataModel::List<const Structs::WiFiInterfaceScanResultStruct::Type>> wiFiScanResults;
+    Optional<DataModel::List<const Structs::ThreadInterfaceScanResultStruct::Type>> threadScanResults;
 
     CHIP_ERROR Encode(TLV::TLVWriter & writer, TLV::Tag tag) const;
 
@@ -7330,10 +7330,10 @@ public:
     static constexpr CommandId GetCommandId() { return Commands::ScanNetworksResponse::Id; }
     static constexpr ClusterId GetClusterId() { return Clusters::NetworkCommissioning::Id; }
 
-    NetworkCommissioningStatus networkingStatus = static_cast<NetworkCommissioningStatus>(0);
+    NetworkCommissioningStatusEnum networkingStatus = static_cast<NetworkCommissioningStatusEnum>(0);
     Optional<chip::CharSpan> debugText;
-    Optional<DataModel::DecodableList<Structs::WiFiInterfaceScanResult::DecodableType>> wiFiScanResults;
-    Optional<DataModel::DecodableList<Structs::ThreadInterfaceScanResult::DecodableType>> threadScanResults;
+    Optional<DataModel::DecodableList<Structs::WiFiInterfaceScanResultStruct::DecodableType>> wiFiScanResults;
+    Optional<DataModel::DecodableList<Structs::ThreadInterfaceScanResultStruct::DecodableType>> threadScanResults;
     CHIP_ERROR Decode(TLV::TLVReader & reader);
 };
 }; // namespace ScanNetworksResponse
@@ -7460,7 +7460,7 @@ public:
     static constexpr CommandId GetCommandId() { return Commands::NetworkConfigResponse::Id; }
     static constexpr ClusterId GetClusterId() { return Clusters::NetworkCommissioning::Id; }
 
-    NetworkCommissioningStatus networkingStatus = static_cast<NetworkCommissioningStatus>(0);
+    NetworkCommissioningStatusEnum networkingStatus = static_cast<NetworkCommissioningStatusEnum>(0);
     Optional<chip::CharSpan> debugText;
     Optional<uint8_t> networkIndex;
 
@@ -7477,7 +7477,7 @@ public:
     static constexpr CommandId GetCommandId() { return Commands::NetworkConfigResponse::Id; }
     static constexpr ClusterId GetClusterId() { return Clusters::NetworkCommissioning::Id; }
 
-    NetworkCommissioningStatus networkingStatus = static_cast<NetworkCommissioningStatus>(0);
+    NetworkCommissioningStatusEnum networkingStatus = static_cast<NetworkCommissioningStatusEnum>(0);
     Optional<chip::CharSpan> debugText;
     Optional<uint8_t> networkIndex;
     CHIP_ERROR Decode(TLV::TLVReader & reader);
@@ -7533,7 +7533,7 @@ public:
     static constexpr CommandId GetCommandId() { return Commands::ConnectNetworkResponse::Id; }
     static constexpr ClusterId GetClusterId() { return Clusters::NetworkCommissioning::Id; }
 
-    NetworkCommissioningStatus networkingStatus = static_cast<NetworkCommissioningStatus>(0);
+    NetworkCommissioningStatusEnum networkingStatus = static_cast<NetworkCommissioningStatusEnum>(0);
     Optional<chip::CharSpan> debugText;
     DataModel::Nullable<int32_t> errorValue;
 
@@ -7550,7 +7550,7 @@ public:
     static constexpr CommandId GetCommandId() { return Commands::ConnectNetworkResponse::Id; }
     static constexpr ClusterId GetClusterId() { return Clusters::NetworkCommissioning::Id; }
 
-    NetworkCommissioningStatus networkingStatus = static_cast<NetworkCommissioningStatus>(0);
+    NetworkCommissioningStatusEnum networkingStatus = static_cast<NetworkCommissioningStatusEnum>(0);
     Optional<chip::CharSpan> debugText;
     DataModel::Nullable<int32_t> errorValue;
     CHIP_ERROR Decode(TLV::TLVReader & reader);
@@ -7613,11 +7613,11 @@ struct TypeInfo
 namespace Networks {
 struct TypeInfo
 {
-    using Type = chip::app::DataModel::List<const chip::app::Clusters::NetworkCommissioning::Structs::NetworkInfo::Type>;
+    using Type = chip::app::DataModel::List<const chip::app::Clusters::NetworkCommissioning::Structs::NetworkInfoStruct::Type>;
     using DecodableType =
-        chip::app::DataModel::DecodableList<chip::app::Clusters::NetworkCommissioning::Structs::NetworkInfo::DecodableType>;
-    using DecodableArgType =
-        const chip::app::DataModel::DecodableList<chip::app::Clusters::NetworkCommissioning::Structs::NetworkInfo::DecodableType> &;
+        chip::app::DataModel::DecodableList<chip::app::Clusters::NetworkCommissioning::Structs::NetworkInfoStruct::DecodableType>;
+    using DecodableArgType = const chip::app::DataModel::DecodableList<
+        chip::app::Clusters::NetworkCommissioning::Structs::NetworkInfoStruct::DecodableType> &;
 
     static constexpr ClusterId GetClusterId() { return Clusters::NetworkCommissioning::Id; }
     static constexpr AttributeId GetAttributeId() { return Attributes::Networks::Id; }
@@ -7663,10 +7663,10 @@ struct TypeInfo
 namespace LastNetworkingStatus {
 struct TypeInfo
 {
-    using Type          = chip::app::DataModel::Nullable<chip::app::Clusters::NetworkCommissioning::NetworkCommissioningStatus>;
-    using DecodableType = chip::app::DataModel::Nullable<chip::app::Clusters::NetworkCommissioning::NetworkCommissioningStatus>;
+    using Type          = chip::app::DataModel::Nullable<chip::app::Clusters::NetworkCommissioning::NetworkCommissioningStatusEnum>;
+    using DecodableType = chip::app::DataModel::Nullable<chip::app::Clusters::NetworkCommissioning::NetworkCommissioningStatusEnum>;
     using DecodableArgType =
-        const chip::app::DataModel::Nullable<chip::app::Clusters::NetworkCommissioning::NetworkCommissioningStatus> &;
+        const chip::app::DataModel::Nullable<chip::app::Clusters::NetworkCommissioning::NetworkCommissioningStatusEnum> &;
 
     static constexpr ClusterId GetClusterId() { return Clusters::NetworkCommissioning::Id; }
     static constexpr AttributeId GetAttributeId() { return Attributes::LastNetworkingStatus::Id; }
@@ -13197,29 +13197,7 @@ struct TypeInfo
 } // namespace GroupKeyManagement
 namespace FixedLabel {
 namespace Structs {
-namespace LabelStruct {
-
-using Fields = Clusters::detail::Structs::LabelStruct::Fields;
-
-// This is a struct type shared across multiple clusters.  Create a type-safe
-// declaration in this cluster namespace (so not just pulling in the shared
-// implementation via "using", but make sure we can initialize our
-// Type/DecodableType from the generic Type/DecodableType as needed.
-struct Type : public Clusters::detail::Structs::LabelStruct::Type
-{
-private:
-    using Super = Clusters::detail::Structs::LabelStruct::Type;
-
-public:
-    constexpr Type() = default;
-    constexpr Type(const Super & arg) : Super(arg) {}
-    constexpr Type(Super && arg) : Super(std::move(arg)) {}
-};
-
-using DecodableType = Type;
-
-} // namespace LabelStruct
-
+namespace LabelStruct = Clusters::detail::Structs::LabelStruct;
 } // namespace Structs
 
 namespace Attributes {
@@ -13295,29 +13273,7 @@ struct TypeInfo
 } // namespace FixedLabel
 namespace UserLabel {
 namespace Structs {
-namespace LabelStruct {
-
-using Fields = Clusters::detail::Structs::LabelStruct::Fields;
-
-// This is a struct type shared across multiple clusters.  Create a type-safe
-// declaration in this cluster namespace (so not just pulling in the shared
-// implementation via "using", but make sure we can initialize our
-// Type/DecodableType from the generic Type/DecodableType as needed.
-struct Type : public Clusters::detail::Structs::LabelStruct::Type
-{
-private:
-    using Super = Clusters::detail::Structs::LabelStruct::Type;
-
-public:
-    constexpr Type() = default;
-    constexpr Type(const Super & arg) : Super(arg) {}
-    constexpr Type(Super && arg) : Super(std::move(arg)) {}
-};
-
-using DecodableType = Type;
-
-} // namespace LabelStruct
-
+namespace LabelStruct = Clusters::detail::Structs::LabelStruct;
 } // namespace Structs
 
 namespace Attributes {
@@ -14258,32 +14214,118 @@ struct TypeInfo
 };
 } // namespace Attributes
 } // namespace ModeSelect
+namespace WasherControls {
+
+namespace Attributes {
+
+namespace SpinSpeeds {
+struct TypeInfo
+{
+    using Type             = chip::app::DataModel::List<const chip::ByteSpan>;
+    using DecodableType    = chip::app::DataModel::DecodableList<chip::ByteSpan>;
+    using DecodableArgType = const chip::app::DataModel::DecodableList<chip::ByteSpan> &;
+
+    static constexpr ClusterId GetClusterId() { return Clusters::WasherControls::Id; }
+    static constexpr AttributeId GetAttributeId() { return Attributes::SpinSpeeds::Id; }
+    static constexpr bool MustUseTimedWrite() { return false; }
+};
+} // namespace SpinSpeeds
+namespace SpinSpeedCurrent {
+struct TypeInfo
+{
+    using Type             = chip::app::DataModel::Nullable<uint8_t>;
+    using DecodableType    = chip::app::DataModel::Nullable<uint8_t>;
+    using DecodableArgType = const chip::app::DataModel::Nullable<uint8_t> &;
+
+    static constexpr ClusterId GetClusterId() { return Clusters::WasherControls::Id; }
+    static constexpr AttributeId GetAttributeId() { return Attributes::SpinSpeedCurrent::Id; }
+    static constexpr bool MustUseTimedWrite() { return false; }
+};
+} // namespace SpinSpeedCurrent
+namespace NumberOfRinses {
+struct TypeInfo
+{
+    using Type             = chip::app::DataModel::Nullable<uint8_t>;
+    using DecodableType    = chip::app::DataModel::Nullable<uint8_t>;
+    using DecodableArgType = const chip::app::DataModel::Nullable<uint8_t> &;
+
+    static constexpr ClusterId GetClusterId() { return Clusters::WasherControls::Id; }
+    static constexpr AttributeId GetAttributeId() { return Attributes::NumberOfRinses::Id; }
+    static constexpr bool MustUseTimedWrite() { return false; }
+};
+} // namespace NumberOfRinses
+namespace MaxRinses {
+struct TypeInfo
+{
+    using Type             = uint8_t;
+    using DecodableType    = uint8_t;
+    using DecodableArgType = uint8_t;
+
+    static constexpr ClusterId GetClusterId() { return Clusters::WasherControls::Id; }
+    static constexpr AttributeId GetAttributeId() { return Attributes::MaxRinses::Id; }
+    static constexpr bool MustUseTimedWrite() { return false; }
+};
+} // namespace MaxRinses
+namespace GeneratedCommandList {
+struct TypeInfo : public Clusters::Globals::Attributes::GeneratedCommandList::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::WasherControls::Id; }
+};
+} // namespace GeneratedCommandList
+namespace AcceptedCommandList {
+struct TypeInfo : public Clusters::Globals::Attributes::AcceptedCommandList::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::WasherControls::Id; }
+};
+} // namespace AcceptedCommandList
+namespace EventList {
+struct TypeInfo : public Clusters::Globals::Attributes::EventList::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::WasherControls::Id; }
+};
+} // namespace EventList
+namespace AttributeList {
+struct TypeInfo : public Clusters::Globals::Attributes::AttributeList::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::WasherControls::Id; }
+};
+} // namespace AttributeList
+namespace FeatureMap {
+struct TypeInfo : public Clusters::Globals::Attributes::FeatureMap::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::WasherControls::Id; }
+};
+} // namespace FeatureMap
+namespace ClusterRevision {
+struct TypeInfo : public Clusters::Globals::Attributes::ClusterRevision::TypeInfo
+{
+    static constexpr ClusterId GetClusterId() { return Clusters::WasherControls::Id; }
+};
+} // namespace ClusterRevision
+
+struct TypeInfo
+{
+    struct DecodableType
+    {
+        static constexpr ClusterId GetClusterId() { return Clusters::WasherControls::Id; }
+
+        CHIP_ERROR Decode(TLV::TLVReader & reader, const ConcreteAttributePath & path);
+
+        Attributes::SpinSpeeds::TypeInfo::DecodableType spinSpeeds;
+        Attributes::SpinSpeedCurrent::TypeInfo::DecodableType spinSpeedCurrent;
+        Attributes::NumberOfRinses::TypeInfo::DecodableType numberOfRinses;
+        Attributes::MaxRinses::TypeInfo::DecodableType maxRinses = static_cast<uint8_t>(0);
+        Attributes::GeneratedCommandList::TypeInfo::DecodableType generatedCommandList;
+        Attributes::AcceptedCommandList::TypeInfo::DecodableType acceptedCommandList;
+        Attributes::EventList::TypeInfo::DecodableType eventList;
+        Attributes::AttributeList::TypeInfo::DecodableType attributeList;
+        Attributes::FeatureMap::TypeInfo::DecodableType featureMap           = static_cast<uint32_t>(0);
+        Attributes::ClusterRevision::TypeInfo::DecodableType clusterRevision = static_cast<uint16_t>(0);
+    };
+};
+} // namespace Attributes
+} // namespace WasherControls
 namespace TemperatureControl {
-namespace Structs {
-namespace TemperatureLevelStruct {
-enum class Fields : uint8_t
-{
-    kLabel            = 0,
-    kTemperatureLevel = 1,
-};
-
-struct Type
-{
-public:
-    chip::CharSpan label;
-    uint8_t temperatureLevel = static_cast<uint8_t>(0);
-
-    CHIP_ERROR Decode(TLV::TLVReader & reader);
-
-    static constexpr bool kIsFabricScoped = false;
-
-    CHIP_ERROR Encode(TLV::TLVWriter & writer, TLV::Tag tag) const;
-};
-
-using DecodableType = Type;
-
-} // namespace TemperatureLevelStruct
-} // namespace Structs
 
 namespace Commands {
 // Forward-declarations so we can reference these later.
@@ -14383,7 +14425,7 @@ struct TypeInfo
     static constexpr bool MustUseTimedWrite() { return false; }
 };
 } // namespace Step
-namespace CurrentTemperatureLevelIndex {
+namespace SelectedTemperatureLevel {
 struct TypeInfo
 {
     using Type             = uint8_t;
@@ -14391,18 +14433,16 @@ struct TypeInfo
     using DecodableArgType = uint8_t;
 
     static constexpr ClusterId GetClusterId() { return Clusters::TemperatureControl::Id; }
-    static constexpr AttributeId GetAttributeId() { return Attributes::CurrentTemperatureLevelIndex::Id; }
+    static constexpr AttributeId GetAttributeId() { return Attributes::SelectedTemperatureLevel::Id; }
     static constexpr bool MustUseTimedWrite() { return false; }
 };
-} // namespace CurrentTemperatureLevelIndex
+} // namespace SelectedTemperatureLevel
 namespace SupportedTemperatureLevels {
 struct TypeInfo
 {
-    using Type = chip::app::DataModel::List<const chip::app::Clusters::TemperatureControl::Structs::TemperatureLevelStruct::Type>;
-    using DecodableType = chip::app::DataModel::DecodableList<
-        chip::app::Clusters::TemperatureControl::Structs::TemperatureLevelStruct::DecodableType>;
-    using DecodableArgType = const chip::app::DataModel::DecodableList<
-        chip::app::Clusters::TemperatureControl::Structs::TemperatureLevelStruct::DecodableType> &;
+    using Type             = chip::app::DataModel::List<const chip::CharSpan>;
+    using DecodableType    = chip::app::DataModel::DecodableList<chip::CharSpan>;
+    using DecodableArgType = const chip::app::DataModel::DecodableList<chip::CharSpan> &;
 
     static constexpr ClusterId GetClusterId() { return Clusters::TemperatureControl::Id; }
     static constexpr AttributeId GetAttributeId() { return Attributes::SupportedTemperatureLevels::Id; }
@@ -14454,11 +14494,11 @@ struct TypeInfo
 
         CHIP_ERROR Decode(TLV::TLVReader & reader, const ConcreteAttributePath & path);
 
-        Attributes::TemperatureSetpoint::TypeInfo::DecodableType temperatureSetpoint                   = static_cast<int16_t>(0);
-        Attributes::MinTemperature::TypeInfo::DecodableType minTemperature                             = static_cast<int16_t>(0);
-        Attributes::MaxTemperature::TypeInfo::DecodableType maxTemperature                             = static_cast<int16_t>(0);
-        Attributes::Step::TypeInfo::DecodableType step                                                 = static_cast<int16_t>(0);
-        Attributes::CurrentTemperatureLevelIndex::TypeInfo::DecodableType currentTemperatureLevelIndex = static_cast<uint8_t>(0);
+        Attributes::TemperatureSetpoint::TypeInfo::DecodableType temperatureSetpoint           = static_cast<int16_t>(0);
+        Attributes::MinTemperature::TypeInfo::DecodableType minTemperature                     = static_cast<int16_t>(0);
+        Attributes::MaxTemperature::TypeInfo::DecodableType maxTemperature                     = static_cast<int16_t>(0);
+        Attributes::Step::TypeInfo::DecodableType step                                         = static_cast<int16_t>(0);
+        Attributes::SelectedTemperatureLevel::TypeInfo::DecodableType selectedTemperatureLevel = static_cast<uint8_t>(0);
         Attributes::SupportedTemperatureLevels::TypeInfo::DecodableType supportedTemperatureLevels;
         Attributes::GeneratedCommandList::TypeInfo::DecodableType generatedCommandList;
         Attributes::AcceptedCommandList::TypeInfo::DecodableType acceptedCommandList;
@@ -34938,29 +34978,7 @@ struct TypeInfo
 } // namespace AudioOutput
 namespace ApplicationLauncher {
 namespace Structs {
-namespace ApplicationStruct {
-
-using Fields = Clusters::detail::Structs::ApplicationStruct::Fields;
-
-// This is a struct type shared across multiple clusters.  Create a type-safe
-// declaration in this cluster namespace (so not just pulling in the shared
-// implementation via "using", but make sure we can initialize our
-// Type/DecodableType from the generic Type/DecodableType as needed.
-struct Type : public Clusters::detail::Structs::ApplicationStruct::Type
-{
-private:
-    using Super = Clusters::detail::Structs::ApplicationStruct::Type;
-
-public:
-    constexpr Type() = default;
-    constexpr Type(const Super & arg) : Super(arg) {}
-    constexpr Type(Super && arg) : Super(std::move(arg)) {}
-};
-
-using DecodableType = Type;
-
-} // namespace ApplicationStruct
-
+namespace ApplicationStruct = Clusters::detail::Structs::ApplicationStruct;
 namespace ApplicationEPStruct {
 enum class Fields : uint8_t
 {
@@ -35235,29 +35253,7 @@ struct TypeInfo
 } // namespace ApplicationLauncher
 namespace ApplicationBasic {
 namespace Structs {
-namespace ApplicationStruct {
-
-using Fields = Clusters::detail::Structs::ApplicationStruct::Fields;
-
-// This is a struct type shared across multiple clusters.  Create a type-safe
-// declaration in this cluster namespace (so not just pulling in the shared
-// implementation via "using", but make sure we can initialize our
-// Type/DecodableType from the generic Type/DecodableType as needed.
-struct Type : public Clusters::detail::Structs::ApplicationStruct::Type
-{
-private:
-    using Super = Clusters::detail::Structs::ApplicationStruct::Type;
-
-public:
-    constexpr Type() = default;
-    constexpr Type(const Super & arg) : Super(arg) {}
-    constexpr Type(Super && arg) : Super(std::move(arg)) {}
-};
-
-using DecodableType = Type;
-
-} // namespace ApplicationStruct
-
+namespace ApplicationStruct = Clusters::detail::Structs::ApplicationStruct;
 } // namespace Structs
 
 namespace Attributes {
