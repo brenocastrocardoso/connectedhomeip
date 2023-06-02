@@ -1475,6 +1475,16 @@ enum class Feature : uint32_t
 };
 } // namespace ModeSelect
 
+namespace WasherControls {
+
+// Bitmap for WasherControlFeature
+enum class WasherControlFeature : uint32_t
+{
+    kSpin  = 0x1,
+    kRinse = 0x2,
+};
+} // namespace WasherControls
+
 namespace TemperatureControl {
 
 // Bitmap for Feature

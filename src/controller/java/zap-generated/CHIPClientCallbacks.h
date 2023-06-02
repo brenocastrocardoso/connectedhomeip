@@ -475,6 +475,16 @@ typedef void (*ModeSelectEventListListAttributeCallback)(void * context,
                                                          const chip::app::DataModel::DecodableList<chip::EventId> & data);
 typedef void (*ModeSelectAttributeListListAttributeCallback)(void * context,
                                                              const chip::app::DataModel::DecodableList<chip::AttributeId> & data);
+typedef void (*WasherControlsSpinSpeedsListAttributeCallback)(void * context,
+                                                              const chip::app::DataModel::DecodableList<chip::ByteSpan> & data);
+typedef void (*WasherControlsGeneratedCommandListListAttributeCallback)(
+    void * context, const chip::app::DataModel::DecodableList<chip::CommandId> & data);
+typedef void (*WasherControlsAcceptedCommandListListAttributeCallback)(
+    void * context, const chip::app::DataModel::DecodableList<chip::CommandId> & data);
+typedef void (*WasherControlsEventListListAttributeCallback)(void * context,
+                                                             const chip::app::DataModel::DecodableList<chip::EventId> & data);
+typedef void (*WasherControlsAttributeListListAttributeCallback)(
+    void * context, const chip::app::DataModel::DecodableList<chip::AttributeId> & data);
 typedef void (*TemperatureControlSupportedTemperatureLevelsListAttributeCallback)(
     void * context,
     const chip::app::DataModel::DecodableList<
