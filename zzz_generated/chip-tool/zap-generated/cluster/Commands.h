@@ -74,6 +74,7 @@
 | BooleanState                                                        | 0x0045 |
 | IcdManagement                                                       | 0x0046 |
 | ModeSelect                                                          | 0x0050 |
+| WasherControls                                                      | 0x0053 |
 | TemperatureControl                                                  | 0x0056 |
 | RefrigeratorAlarm                                                   | 0x0057 |
 | AirQuality                                                          | 0x005B |
@@ -4077,6 +4078,26 @@ public:
 private:
     chip::app::Clusters::ModeSelect::Commands::ChangeToMode::Type mRequest;
 };
+
+/*----------------------------------------------------------------------------*\
+| Cluster WasherControls                                              | 0x0053 |
+|------------------------------------------------------------------------------|
+| Commands:                                                           |        |
+|------------------------------------------------------------------------------|
+| Attributes:                                                         |        |
+| * SpinSpeeds                                                        | 0x0000 |
+| * SpinSpeedCurrent                                                  | 0x0001 |
+| * NumberOfRinses                                                    | 0x0002 |
+| * MaxRinses                                                         | 0x0003 |
+| * GeneratedCommandList                                              | 0xFFF8 |
+| * AcceptedCommandList                                               | 0xFFF9 |
+| * EventList                                                         | 0xFFFA |
+| * AttributeList                                                     | 0xFFFB |
+| * FeatureMap                                                        | 0xFFFC |
+| * ClusterRevision                                                   | 0xFFFD |
+|------------------------------------------------------------------------------|
+| Events:                                                             |        |
+\*----------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------*\
 | Cluster TemperatureControl                                          | 0x0056 |
@@ -14228,6 +14249,74 @@ void registerClusterModeSelect(Commands & commands, CredentialIssuerCommands * c
 
     commands.Register(clusterName, clusterCommands);
 }
+void registerClusterWasherControls(Commands & commands, CredentialIssuerCommands * credsIssuerConfig)
+{
+    using namespace chip::app::Clusters::WasherControls;
+
+    const char * clusterName = "WasherControls";
+
+    commands_list clusterCommands = {
+        //
+        // Commands
+        //
+        make_unique<ClusterCommand>(Id, credsIssuerConfig), //
+        //
+        // Attributes
+        //
+        make_unique<ReadAttribute>(Id, credsIssuerConfig),                                                                 //
+        make_unique<ReadAttribute>(Id, "spin-speeds", Attributes::SpinSpeeds::Id, credsIssuerConfig),                      //
+        make_unique<ReadAttribute>(Id, "spin-speed-current", Attributes::SpinSpeedCurrent::Id, credsIssuerConfig),         //
+        make_unique<ReadAttribute>(Id, "number-of-rinses", Attributes::NumberOfRinses::Id, credsIssuerConfig),             //
+        make_unique<ReadAttribute>(Id, "max-rinses", Attributes::MaxRinses::Id, credsIssuerConfig),                        //
+        make_unique<ReadAttribute>(Id, "generated-command-list", Attributes::GeneratedCommandList::Id, credsIssuerConfig), //
+        make_unique<ReadAttribute>(Id, "accepted-command-list", Attributes::AcceptedCommandList::Id, credsIssuerConfig),   //
+        make_unique<ReadAttribute>(Id, "event-list", Attributes::EventList::Id, credsIssuerConfig),                        //
+        make_unique<ReadAttribute>(Id, "attribute-list", Attributes::AttributeList::Id, credsIssuerConfig),                //
+        make_unique<ReadAttribute>(Id, "feature-map", Attributes::FeatureMap::Id, credsIssuerConfig),                      //
+        make_unique<ReadAttribute>(Id, "cluster-revision", Attributes::ClusterRevision::Id, credsIssuerConfig),            //
+        make_unique<WriteAttribute<>>(Id, credsIssuerConfig),                                                              //
+        make_unique<WriteAttributeAsComplex<chip::app::DataModel::List<const chip::ByteSpan>>>(
+            Id, "spin-speeds", Attributes::SpinSpeeds::Id, WriteCommandType::kForceWrite, credsIssuerConfig), //
+        make_unique<WriteAttribute<chip::app::DataModel::Nullable<uint8_t>>>(Id, "spin-speed-current", 0, UINT8_MAX,
+                                                                             Attributes::SpinSpeedCurrent::Id,
+                                                                             WriteCommandType::kWrite, credsIssuerConfig), //
+        make_unique<WriteAttribute<chip::app::DataModel::Nullable<uint8_t>>>(
+            Id, "number-of-rinses", 0, UINT8_MAX, Attributes::NumberOfRinses::Id, WriteCommandType::kWrite, credsIssuerConfig), //
+        make_unique<WriteAttribute<uint8_t>>(Id, "max-rinses", 0, UINT8_MAX, Attributes::MaxRinses::Id,
+                                             WriteCommandType::kForceWrite, credsIssuerConfig), //
+        make_unique<WriteAttributeAsComplex<chip::app::DataModel::List<const chip::CommandId>>>(
+            Id, "generated-command-list", Attributes::GeneratedCommandList::Id, WriteCommandType::kForceWrite,
+            credsIssuerConfig), //
+        make_unique<WriteAttributeAsComplex<chip::app::DataModel::List<const chip::CommandId>>>(
+            Id, "accepted-command-list", Attributes::AcceptedCommandList::Id, WriteCommandType::kForceWrite, credsIssuerConfig), //
+        make_unique<WriteAttributeAsComplex<chip::app::DataModel::List<const chip::EventId>>>(
+            Id, "event-list", Attributes::EventList::Id, WriteCommandType::kForceWrite, credsIssuerConfig), //
+        make_unique<WriteAttributeAsComplex<chip::app::DataModel::List<const chip::AttributeId>>>(
+            Id, "attribute-list", Attributes::AttributeList::Id, WriteCommandType::kForceWrite, credsIssuerConfig), //
+        make_unique<WriteAttribute<uint32_t>>(Id, "feature-map", 0, UINT32_MAX, Attributes::FeatureMap::Id,
+                                              WriteCommandType::kForceWrite, credsIssuerConfig), //
+        make_unique<WriteAttribute<uint16_t>>(Id, "cluster-revision", 0, UINT16_MAX, Attributes::ClusterRevision::Id,
+                                              WriteCommandType::kForceWrite, credsIssuerConfig),                                //
+        make_unique<SubscribeAttribute>(Id, credsIssuerConfig),                                                                 //
+        make_unique<SubscribeAttribute>(Id, "spin-speeds", Attributes::SpinSpeeds::Id, credsIssuerConfig),                      //
+        make_unique<SubscribeAttribute>(Id, "spin-speed-current", Attributes::SpinSpeedCurrent::Id, credsIssuerConfig),         //
+        make_unique<SubscribeAttribute>(Id, "number-of-rinses", Attributes::NumberOfRinses::Id, credsIssuerConfig),             //
+        make_unique<SubscribeAttribute>(Id, "max-rinses", Attributes::MaxRinses::Id, credsIssuerConfig),                        //
+        make_unique<SubscribeAttribute>(Id, "generated-command-list", Attributes::GeneratedCommandList::Id, credsIssuerConfig), //
+        make_unique<SubscribeAttribute>(Id, "accepted-command-list", Attributes::AcceptedCommandList::Id, credsIssuerConfig),   //
+        make_unique<SubscribeAttribute>(Id, "event-list", Attributes::EventList::Id, credsIssuerConfig),                        //
+        make_unique<SubscribeAttribute>(Id, "attribute-list", Attributes::AttributeList::Id, credsIssuerConfig),                //
+        make_unique<SubscribeAttribute>(Id, "feature-map", Attributes::FeatureMap::Id, credsIssuerConfig),                      //
+        make_unique<SubscribeAttribute>(Id, "cluster-revision", Attributes::ClusterRevision::Id, credsIssuerConfig),            //
+        //
+        // Events
+        //
+        make_unique<ReadEvent>(Id, credsIssuerConfig),      //
+        make_unique<SubscribeEvent>(Id, credsIssuerConfig), //
+    };
+
+    commands.Register(clusterName, clusterCommands);
+}
 void registerClusterTemperatureControl(Commands & commands, CredentialIssuerCommands * credsIssuerConfig)
 {
     using namespace chip::app::Clusters::TemperatureControl;
@@ -23555,6 +23644,7 @@ void registerClusters(Commands & commands, CredentialIssuerCommands * credsIssue
     registerClusterBooleanState(commands, credsIssuerConfig);
     registerClusterIcdManagement(commands, credsIssuerConfig);
     registerClusterModeSelect(commands, credsIssuerConfig);
+    registerClusterWasherControls(commands, credsIssuerConfig);
     registerClusterTemperatureControl(commands, credsIssuerConfig);
     registerClusterRefrigeratorAlarm(commands, credsIssuerConfig);
     registerClusterAirQuality(commands, credsIssuerConfig);

@@ -292,6 +292,12 @@
 #define CHIP_PRINTCLUSTER_MODE_SELECT_CLUSTER
 #endif
 
+#if defined(ZCL_USING_WASHER_CONTROLS_CLUSTER_SERVER) || defined(ZCL_USING_WASHER_CONTROLS_CLUSTER_CLIENT)
+#define CHIP_PRINTCLUSTER_WASHER_CONTROLS_CLUSTER { chip::app::Clusters::WasherControls::Id, "Washer Controls" },
+#else
+#define CHIP_PRINTCLUSTER_WASHER_CONTROLS_CLUSTER
+#endif
+
 #if defined(ZCL_USING_TEMPERATURE_CONTROL_CLUSTER_SERVER) || defined(ZCL_USING_TEMPERATURE_CONTROL_CLUSTER_CLIENT)
 #define CHIP_PRINTCLUSTER_TEMPERATURE_CONTROL_CLUSTER { chip::app::Clusters::TemperatureControl::Id, "Temperature Control" },
 #else
@@ -926,6 +932,7 @@
     CHIP_PRINTCLUSTER_BOOLEAN_STATE_CLUSTER                                                                                        \
     CHIP_PRINTCLUSTER_ICD_MANAGEMENT_CLUSTER                                                                                       \
     CHIP_PRINTCLUSTER_MODE_SELECT_CLUSTER                                                                                          \
+    CHIP_PRINTCLUSTER_WASHER_CONTROLS_CLUSTER                                                                                      \
     CHIP_PRINTCLUSTER_TEMPERATURE_CONTROL_CLUSTER                                                                                  \
     CHIP_PRINTCLUSTER_REFRIGERATOR_ALARM                                                                                           \
     CHIP_PRINTCLUSTER_AIR_QUALITY_CLUSTER                                                                                          \
