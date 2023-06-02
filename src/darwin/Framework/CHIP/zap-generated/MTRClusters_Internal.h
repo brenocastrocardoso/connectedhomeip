@@ -217,6 +217,7 @@
 @end
 
 @interface MTRClusterRVCCleanModeSelect ()
+@interface MTRClusterWasherControls ()
 @property (nonatomic, readonly) uint16_t endpoint;
 @property (nonatomic, readonly) MTRDevice * device;
 @end
