@@ -4397,7 +4397,7 @@ class ChipClusters:
                 "reportable": True,
             },
             0x00000004: {
-                "attributeName": "CurrentTemperatureLevelIndex",
+                "attributeName": "SelectedTemperatureLevel",
                 "attributeId": 0x00000004,
                 "type": "int",
                 "reportable": True,
@@ -4405,7 +4405,7 @@ class ChipClusters:
             0x00000005: {
                 "attributeName": "SupportedTemperatureLevels",
                 "attributeId": 0x00000005,
-                "type": "",
+                "type": "str",
                 "reportable": True,
             },
             0x0000FFF8: {
