@@ -148,6 +148,8 @@ void AppDeviceCallbacks::OnWasherControlAttributeChangeCallback(EndpointId endpo
         // NumberOfRinses::Get(endpointId, &hue);
     }
 
+    ESP_LOGI(TAG, "Washer command received: ");
+
 exit:
     return;
 }
