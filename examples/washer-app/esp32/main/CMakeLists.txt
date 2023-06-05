@@ -41,7 +41,7 @@ set(SRC_DIRS_LIST
   "${CMAKE_SOURCE_DIR}/third_party/connectedhomeip/src/app/clusters/bindings"
   "${CMAKE_SOURCE_DIR}/third_party/connectedhomeip/src/app/clusters/descriptor"
   "${CMAKE_SOURCE_DIR}/third_party/connectedhomeip/src/app/clusters/diagnostic-logs-server"
-  "${CMAKE_SOURCE_DIR}/third_party/connectedhomeip/src/app/clusters/color-control-server"
+  "${CMAKE_SOURCE_DIR}/third_party/connectedhomeip/src/app/clusters/washer-controls-server"
   "${CMAKE_SOURCE_DIR}/third_party/connectedhomeip/src/app/clusters/ethernet-network-diagnostics-server"
   "${CMAKE_SOURCE_DIR}/third_party/connectedhomeip/src/app/clusters/fixed-label-server"
   "${CMAKE_SOURCE_DIR}/third_party/connectedhomeip/src/app/clusters/general-commissioning-server"

@@ -54,6 +54,10 @@ void AppDeviceCallbacks::PostAttributeChangeCallback(EndpointId endpointId, Clus
         OnLevelControlAttributeChangeCallback(endpointId, attributeId, value);
         break;
 
+    case WasherControls::Id:
+        OnWasherControlAttributeChangeCallback(endpointId, attributeId, value);
+        break;
+
 #if CONFIG_LED_TYPE_RMT
     case ColorControl::Id:
         OnColorControlAttributeChangeCallback(endpointId, attributeId, value);
@@ -120,6 +124,33 @@ exit:
     return;
 }
 #endif // CONFIG_LED_TYPE_RMT
+
+
+// Currently ColorControl cluster is supported for ESP32C3_DEVKITM and ESP32S3_DEVKITM which have an on-board RGB-LED
+void AppDeviceCallbacks::OnWasherControlAttributeChangeCallback(EndpointId endpointId, AttributeId attributeId, uint8_t * value)
+{
+    using namespace WasherControls::Attributes;
+
+    uint8_t hue, saturation;
+
+    VerifyOrExit(attributeId == SpinSpeeds::Id || attributeId == NumberOfRinses::Id,
+                 ESP_LOGI(TAG, "Unhandled AttributeId ID: '0x%" PRIx32 "'", attributeId));
+    VerifyOrExit(endpointId == 1, ESP_LOGE(TAG, "Unexpected EndPoint ID: `0x%02x'", endpointId));
+
+    if (attributeId == SpinSpeeds::Id)
+    {
+        hue = *value;
+        // SpinSpeeds::Get(endpointId, &saturation);
+    }
+    else
+    {
+        saturation = *value;
+        // NumberOfRinses::Get(endpointId, &hue);
+    }
+
+exit:
+    return;
+}
 
 /** @brief OnOff Cluster Init
  *
